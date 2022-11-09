@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class CubeRota : MonoBehaviour
 {
-    float rotationSpeed = 34f;
 
+    public Vector3 worldPosition;
     void OnMouseDrag()
     {
-        float xAxisRotation = Input.GetAxis("Mouse X") * rotationSpeed;
-        float yAxisRotation = Input.GetAxis("Mouse Y") * rotationSpeed;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z =Camera.main.nearClipPlane + 2;
 
-        transform.Rotate(Vector3.forward, xAxisRotation);
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
+
+        transform.up = direction;
+    }
+
+    void Update()
+    {
+        
     }
 }
